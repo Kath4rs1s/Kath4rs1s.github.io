@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="[object Object]"><meta name="description" content="刷题平台地址：xss-quiz"><meta name="author" content="Katharsis"><title>xss从零开始之刷xss-quiz - Kath4rs1s</title><meta description="刷题平台地址：xss-quiz"><meta property="og:type" content="article"><meta property="og:title" content="xss从零开始之刷xss-quiz"><meta property="og:url" content="http://yoursite.com/2020/09/17/xss-challenges/"><meta property="og:site_name" content="Katharsis"><meta property="og:description" content="刷题平台地址：xss-quiz"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2020-09-17T10:49:55.000Z"><meta property="article:modified_time" content="2020-09-22T02:38:59.535Z"><meta property="article:author" content="Katharsis"><meta property="article:tag" content="xss"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://yoursite.com/img/avatar.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/09/17/xss-challenges/"},"headline":"xss从零开始之刷xss-quiz","image":["http://yoursite.com/img/avatar.png"],"datePublished":"2020-09-17T10:49:55.000Z","dateModified":"2020-09-22T02:38:59.535Z","author":{"@type":"Person","name":"Katharsis"},"description":"刷题平台地址：xss-quiz"}</script><link rel="alternative" href="/atom.xml" title="Kath4rs1s" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/pace/1.0.2/pace.min.js"></script><link rel="stylesheet" href="/css/style.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2020-09-17  <span class="level-item"><i class="far fa-clock"> </i>5 m  <i class="fas fa-pencil-alt"> </i>0.8 k</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span> visits</span></div></div><h1 class="title is-3 is-size-4-mobile">xss从零开始之刷xss-quiz</h1><div class="content"><h2 id="刷题"><a href="#刷题" class="headerlink" title="刷题"></a>刷题</h2><p>平台地址：<a href="http://xss-quiz.int21h.jp/">xss-quiz</a></p>
+<a id="more"></a>
+<h3 id="chanllenge1"><a href="#chanllenge1" class="headerlink" title="chanllenge1"></a>chanllenge1</h3><p>很简单，直接放payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(document.domain)&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="challenge2"><a href="#challenge2" class="headerlink" title="challenge2"></a>challenge2</h3><p>输入第一题payload没反应，查看源代码</p>
+<p><img src="images/xss-challenges/20200917185937.png" alt=""></p>
+<p>发现被嵌入在input标签中所以不会解析，需要构造一下，使其逃逸出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(document.domain)&lt;&#x2F;script&gt;&lt;&quot;</span><br></pre></td></tr></table></figure>
+<p>成功弹窗</p>
+<p><img src="images/xss-challenges/20200917190303.png" alt=""></p>
+<h3 id="challenge3-其它input框的xss"><a href="#challenge3-其它input框的xss" class="headerlink" title="challenge3 其它input框的xss"></a>challenge3 其它input框的xss</h3><p><img src="images/xss-challenges/20200917190428.png" alt=""></p>
+<p>输入payload没反应，查看源代码发现会被转义，抓包发现p2参数，在p2参数处xss，成功进入下一关</p>
+<h3 id="challenge4-隐藏input框的xss"><a href="#challenge4-隐藏input框的xss" class="headerlink" title="challenge4 隐藏input框的xss"></a>challenge4 隐藏input框的xss</h3><p>发现p1,p2参数都被转义了，查看源代码发现隐藏输入框</p>
+<p><img src="images/xss-challenges/20200917190917.png" alt=""></p>
+<p>把hidden改为text，输入第二关payload成功弹窗</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(document.domain)&lt;&#x2F;script&gt;&lt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="images/xss-challenges/20200917191306.png" alt=""></p>
+<h3 id="challenge5-前端长度限制的xss"><a href="#challenge5-前端长度限制的xss" class="headerlink" title="challenge5 前端长度限制的xss"></a>challenge5 前端长度限制的xss</h3><p>随便输入发现长度限制为15<br><img src="images/xss-challenges/20200917191618.png" alt=""></p>
+<p>直接修改15为其他大数，然后输入payload提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(document.domain)&lt;&#x2F;script&gt;&lt;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="images/xss-challenges/20200917191547.png" alt=""></p>
+<h3 id="challenge6-on事件bypass尖括号"><a href="#challenge6-on事件bypass尖括号" class="headerlink" title="challenge6 on事件bypass尖括号"></a>challenge6 on事件bypass尖括号</h3><p>过滤了尖括号，需要绕过，注意查看元素构造Payload:<br>移动鼠标触发事件：<code>&quot;onmouseover=&quot;alert(document.domain)&quot;</code><br>鼠标点击触发事件：<code>&quot;onclick=&quot;alert(document.domain)&quot;</code></p>
+<h3 id="challenge7-不使用引号绕过引号"><a href="#challenge7-不使用引号绕过引号" class="headerlink" title="challenge7 不使用引号绕过引号"></a>challenge7 不使用引号绕过引号</h3><p>发现引号被过滤了，使用空格分隔属性，不使用”,从而绕过”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test onmouseover&#x3D;alert(document.domain)</span><br></pre></td></tr></table></figure>
+
+<h3 id="challenge8-javascript伪协议"><a href="#challenge8-javascript伪协议" class="headerlink" title="challenge8 javascript伪协议"></a>challenge8 javascript伪协议</h3><p>涨姿势了，还可以这样用，输出在href下时，使用javascript伪协议<br>常见用到威胁的属性如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">href</span><br><span class="line">backgroud</span><br></pre></td></tr></table></figure>
+<p>bypass</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert(document.domain);</span><br></pre></td></tr></table></figure>
+<p>等价的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert%28document.domain%29;</span><br></pre></td></tr></table></figure>
+
+<h3 id="challenge9"><a href="#challenge9" class="headerlink" title="challenge9"></a>challenge9</h3><p>好像有问题，跳过</p>
+<h3 id="challenge10-双写绕过"><a href="#challenge10-双写绕过" class="headerlink" title="challenge10 双写绕过"></a>challenge10 双写绕过</h3><p>把domain置换为空，直接双写绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;script&gt;alert(document.domdomainain)&lt;&#x2F;script&gt;&lt;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="challenge11-编码绕过"><a href="#challenge11-编码绕过" class="headerlink" title="challenge11 编码绕过"></a>challenge11 编码绕过</h3><p>过滤了很多，script会被替换为xscript，on事件会被替换为onxxx，style会被替换为stxxx<br>使用html编码绕过构造script过滤，但是直接构造<code>&lt;scr&amp;#105;p\&gt;</code>不会解码，html编码解析只对标签里面属性的值进行解码<br>可以使用a标签中的href+伪协议把他放在属性中构造<br>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&gt;&lt;a href&#x3D;javascr&amp;#105;pt:alert(document.domain)&gt;xss&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="challenge15-document-write"><a href="#challenge15-document-write" class="headerlink" title="challenge15 document.write()"></a>challenge15 document.write()</h3><p>尖括号和引号被过滤，但在input标签之上引用了document.write的方法<br>write() 方法可向文档写入 HTML 表达式或 JavaScript 代码。那么我们在write中写入的代码就是js的范畴了，在js中可以使用unicode编码或者十六进制编码，document.write在输出的时候会解码一下数据，把unicode编码的字符转换成实体字符，从而绕过过滤。<br>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\u003cscript\\u003ealert(document.domain);\\u003c&#x2F;script\\u003e</span><br><span class="line">\\x3cscript\\x3ealert(document.domain);\\x3c&#x2F;script\\x3e</span><br></pre></td></tr></table></figure>
+<p>一种是unnicode编码，一种是十六进制编码，都可以绕过。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总结一下，调用js的方式：一些on事件，如:onmouseover、onclick、onerror等等。<br>如果是标签的话，要脱离其它标签才能开启js解析调用。<br>还有就是一些特定的方法，比如document.write。<br>学会构造、学会用javascript伪协议，学会编码绕过，知道浏览器解析的顺序</p>
+</div><ul class="post-copyright"><li><strong>Post Title: </strong><a href="http://yoursite.com/2020/09/17/xss-challenges/">xss从零开始之刷xss-quiz</a></li><li><strong>Post Author: </strong><a href="http://yoursite.com">Katharsis</a></li><li><strong>Post Link: </strong><a href="http://yoursite.com/2020/09/17/xss-challenges/">http://yoursite.com/2020/09/17/xss-challenges/</a></li><li><strong>Copyright Notice: </strong><span>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></li></ul><div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># Related Post</span><br><span>  1.<a class="is-size-6" href="/2020/09/22/xss-game/" target="_blank">xss从零开始之刷xss-game</a><br></span><span>  2.<a class="is-size-6" href="/2020/08/10/buuoj-03/" target="_blank">buu刷题记录（三）</a><br></span><span>  3.<a class="is-size-6" href="/2020/07/20/buuoj-02/" target="_blank">buuoj 刷题记录（二）</a><br></span><span>  4.<a class="is-size-6" href="/2020/07/13/buuoj_01/" target="_blank">buuoj 刷题记录（一）</a><br></span></div></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/09/22/xss-game/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">xss从零开始之刷xss-game</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/09/16/PbootCMS-2-0-7/"><span class="level-item">PbootCMS2.0.7前台任意文件包含漏洞复现</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget toc-scroll" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-刷题" href="#刷题"><span>刷题</span></a><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-chanllenge1" href="#chanllenge1"><span>chanllenge1</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge2" href="#challenge2"><span>challenge2</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge3-其它input框的xss" href="#challenge3-其它input框的xss"><span>challenge3 其它input框的xss</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge4-隐藏input框的xss" href="#challenge4-隐藏input框的xss"><span>challenge4 隐藏input框的xss</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge5-前端长度限制的xss" href="#challenge5-前端长度限制的xss"><span>challenge5 前端长度限制的xss</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge6-on事件bypass尖括号" href="#challenge6-on事件bypass尖括号"><span>challenge6 on事件bypass尖括号</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge7-不使用引号绕过引号" href="#challenge7-不使用引号绕过引号"><span>challenge7 不使用引号绕过引号</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge8-javascript伪协议" href="#challenge8-javascript伪协议"><span>challenge8 javascript伪协议</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge9" href="#challenge9"><span>challenge9</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge10-双写绕过" href="#challenge10-双写绕过"><span>challenge10 双写绕过</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge11-编码绕过" href="#challenge11-编码绕过"><span>challenge11 编码绕过</span></a></li><li><a class="is-flex toc-item" id="toc-item-challenge15-document-write" href="#challenge15-document-write"><span>challenge15 document.write()</span></a></li></ul></li><li><a class="is-flex toc-item" id="toc-item-总结" href="#总结"><span>总结</span></a></li></ul></div></div><script type="text/javascript" async>
+        $(document).ready(function () { //参考自 https://github.com/ppoffice/hexo-theme-icarus/pull/616/files
+            var observerTopMargin;
+            var scrollObserver;
+            var headerElems = $(".headerlink");
+            var activeTocItem;
+        
+            function initIntersectionObserver(docHeight) {
+                observerTopMargin = docHeight;
+                scrollObserver = new IntersectionObserver(scrollCallBack,
+                    {
+                        root: null,  // viewpoint
+                        rootMargin: docHeight + "px 0px -80% 0px"  // cover top 30% of viewport to the top of document
+                    })
+            }
+        
+            function scrollCallBack(entries, observer) {
+                if ($(window).scrollTop() > observerTopMargin * 0.7) { 
+                    // User somehow scroll to 70% of observerTopMargin (which is inited as 200% document height)
+                    // Observer top margin need to extend to cover all the space to the top of the document
+                    initIntersectionObserver(observerTopMargin * 2)
+                    observer.disconnect();
+                    return;
+                }
+                let toActive;
+                if (entries[0].intersectionRatio == 1) {  // enter viewed area
+                    let entry = entries.reduce((u, v) => (u.target.toc_id > v.target.toc_id ? u : v));  // get the lowest item
+                    toActive = $("#toc-item-" + $(entry.target).attr("href").substr(1));
+                } else {
+                    let entry = entries.reduce((u, v) => (u.target.toc_id < v.target.toc_id ? u : v));  // get the highest item
+                    let idx = Math.max(entry.target.toc_id - 1, 0);
+                    toActive = $("#toc-item-" + $(headerElems[idx]).attr("href").substr(1));
+                }
+                if (activeTocItem) activeTocItem.removeClass("is-current");
+                activeTocItem = toActive
+                activeTocItem.addClass("is-current");
+            }
+        
+            initIntersectionObserver($(document).height() * 2);
+            headerElems.each(function (index, obj) {
+                obj.toc_id = index;
+                scrollObserver.observe(obj);
+            })
+        });</script></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="Katharsis"></figure><p class="title is-size-4 is-block line-height-inherit">Katharsis</p><p class="is-size-6 is-block">^_^</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>中国</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">19</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">4</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="/" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Github" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Weibo" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Email" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Next" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/null"><i></i></a></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a><p class="size-small"><span>&copy; 2020 Katharsis</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>,Modify by <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">removeif</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><span><span id="statistic-times">loading...</span><script>function createTime(time) {
+            var n = new Date(time);
+            now.setTime(now.getTime() + 250),
+                days = (now - n) / 1e3 / 60 / 60 / 24,
+                dnum = Math.floor(days),
+                hours = (now - n) / 1e3 / 60 / 60 - 24 * dnum,
+                hnum = Math.floor(hours),
+            1 == String(hnum).length && (hnum = "0" + hnum),
+                minutes = (now - n) / 1e3 / 60 - 1440 * dnum - 60 * hnum,
+                mnum = Math.floor(minutes),
+            1 == String(mnum).length && (mnum = "0" + mnum),
+                seconds = (now - n) / 1e3 - 86400 * dnum - 3600 * hnum - 60 * mnum,
+                snum = Math.round(seconds),
+            1 == String(snum).length && (snum = "0" + snum),
+                document.getElementById("statistic-times").innerHTML = "❤️Site from <strong>"+time.split(" ")[0].replace(/\//g,".")+"</strong> has existed <strong>" + dnum + "</strong> d <strong>" + hnum + "</strong> h <strong>" + mnum + "</strong> m <strong>" + snum + "</strong> s！❤️";
+        }var now = new Date();setInterval("createTime('2020/7/11 00:00:00')", 250,"");</script><br></span><div class="size-small"><span>❤️Thx <strong><span id="busuanzi_value_site_uv">99+</span></strong> users <strong><span id="busuanzi_value_site_pv">99+</span></strong> visited！❤️</span></div></p></div><div class="level-end"><div class="sideMusic"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js style="width: auto;height: 2000px;" server="netease" type="playlist" id="4978492128" theme="#2980b9" loop="all" autoplay="false" order="list" storageName="aplayer-setting" lrctype="0" list-max-height="400px" fixed="true"></meting-js></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back-to-top.js" defer></script><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="/js/toc.js" defer></script><script src="/js/main.js" defer></script><link rel="stylesheet" href="/css/insight.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Type something..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: 'Posts',
+                    PAGES: 'Pages',
+                    CATEGORIES: 'Categories',
+                    TAGS: 'Tags',
+                    UNTITLED: '(Untitled)',
+                },
+                CONTENT_URL: '/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="/js/insight.js" defer></script></body></html>
