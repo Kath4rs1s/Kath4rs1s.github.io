@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><meta name="keywords" content="[object Object]"><meta name="description" content="总结一下php.ini中常用安全配置和常见的可能引发安全问题的函数"><meta name="author" content="Katharsis"><title>php安全小记（一） - Kath4rs1s</title><meta description="总结一下php.ini中常用安全配置和常见的可能引发安全问题的函数"><meta property="og:type" content="article"><meta property="og:title" content="php安全小记（一）"><meta property="og:url" content="http://yoursite.com/2020/10/08/php-security/"><meta property="og:site_name" content="Katharsis"><meta property="og:description" content="总结一下php.ini中常用安全配置和常见的可能引发安全问题的函数"><meta property="og:locale" content="en_US"><meta property="article:published_time" content="2020-10-08T05:06:37.000Z"><meta property="article:modified_time" content="2020-10-08T09:37:58.984Z"><meta property="article:author" content="Katharsis"><meta property="article:tag" content="php"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://yoursite.com/img/avatar.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/10/08/php-security/"},"headline":"php安全小记（一）","image":["http://yoursite.com/img/avatar.png"],"datePublished":"2020-10-08T05:06:37.000Z","dateModified":"2020-10-08T09:37:58.984Z","author":{"@type":"Person","name":"Katharsis"},"description":"总结一下php.ini中常用安全配置和常见的可能引发安全问题的函数"}</script><link rel="alternative" href="/atom.xml" title="Kath4rs1s" type="application/atom+xml"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/pace/1.0.2/pace.min.js"></script><link rel="stylesheet" href="/css/style.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2020-10-08  <span class="level-item"><i class="far fa-clock"> </i>6 m  <i class="fas fa-pencil-alt"> </i>0.9 k</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span> visits</span></div></div><h1 class="title is-3 is-size-4-mobile">php安全小记（一）</h1><div class="content"><p>总结一下php.ini中常用安全配置和常见的可能引发安全问题的函数</p>
+<a id="more"></a>
+<h2 id="php-ini"><a href="#php-ini" class="headerlink" title="php.ini"></a>php.ini</h2><p>php.ini中有一些重要的参数，若配置不当则有可能引发安全问题，在5.4之前又许多参数在5.4之后被移除，因为都更新到php7，所以这里就不写那些被移除的参数了</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>说明</th>
+<th>可配置范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>allow_url_include</strong></td>
+<td>(是否允许远程包含文件)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>allow_url_fopen</strong></td>
+<td>(是否允许打开远程文件)</td>
+<td>php.ini only</td>
+</tr>
+<tr>
+<td><strong>open_basedir</strong></td>
+<td>(可访问目录)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>disable_functions</strong></td>
+<td>(禁用函数)</td>
+<td>php.ini only</td>
+</tr>
+<tr>
+<td><strong>display_errors</strong> 和 <strong>error_reporting</strong></td>
+<td>(错误显示)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>expose_php</strong></td>
+<td>(是否在服务器返回信息HTTP头显示PHP版本)</td>
+<td>php.ini only</td>
+</tr>
+<tr>
+<td><strong>max_execution_time</strong></td>
+<td>(每个脚本最多执行秒数)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>memory_limit</strong></td>
+<td>(每个脚本能够使用的最大内存数量)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>log_errors</strong></td>
+<td>(将错误输入到日志文件)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>log_errors_max_len</strong></td>
+<td>(设定log_errors的最大长度)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>variables_order</strong></td>
+<td>(此指令描述了php注册GET,POST,Cookie,环境和内置变量的顺序，注册使用从左往右的顺序，新的值会覆盖旧的值)</td>
+<td>PHP_INI_PERDIR</td>
+</tr>
+<tr>
+<td><strong>post_max_size</strong></td>
+<td>(PHP可以接受的最大的POST数据大小)</td>
+<td>PHP_INI_PERDIR</td>
+</tr>
+<tr>
+<td><strong>auto_prepend_file</strong></td>
+<td>(在任何PHP文件之前自动包含的文件)</td>
+<td>PHP_INI_PERDIR</td>
+</tr>
+<tr>
+<td><strong>auto_append_file</strong></td>
+<td>(在任何PHP文档之后自动包含的文件)</td>
+<td>PHP_INI_PERDIR</td>
+</tr>
+<tr>
+<td><strong>extension_dir</strong></td>
+<td>(可加载的扩展（模块）的目录位置)</td>
+<td>PHP_INI_SYSTEM</td>
+</tr>
+<tr>
+<td><strong>file_uploads</strong></td>
+<td>(是否允许HTTP文件上传)</td>
+<td>PHP_INI_SYSTEM</td>
+</tr>
+<tr>
+<td><strong>upload_tmp_dir</strong></td>
+<td>(对于HTTP上传文件的临时文件目录)</td>
+<td>PHP_INI_SYSTEM</td>
+</tr>
+<tr>
+<td><strong>upload_max_filesize</strong></td>
+<td>(允许上传的最大文件大小)</td>
+<td>PHP_INI_SYSTEM</td>
+</tr>
+<tr>
+<td><strong>session.cookie_secure</strong></td>
+<td>(仅允许在 HTTPS 协议下访问会话 ID cookie)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>session.cookie_httponly</strong></td>
+<td>(禁止 JavaScript 访问会话 cookie)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>session.gc_maxlifetime</strong></td>
+<td>(设置会话过期时间)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+<tr>
+<td><strong>session.save_path</strong></td>
+<td>(存储会话数据的路径)</td>
+<td>PHP_INI_ALL</td>
+</tr>
+</tbody></table>
+<p>注：<br><strong>PHP_INI_ALL</strong> 可在任何地方设定<br><strong>PHP_INI_PERDIR</strong> 可在 <em>php.ini*，</em>.htaccess* 或 <em>httpd.conf</em> 中设定<br><strong>PHP_INI_SYSTEM</strong> 可在 <em>php.ini</em> 或 <em>httpd.conf</em> 中设定</p>
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><h3 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h3><ul>
+<li>eval()</li>
+<li>assert()</li>
+<li>preg_replace()+’/e’ （PHP5.5废弃）</li>
+<li>call_user_func()</li>
+<li>call_user_func_array()</li>
+<li>create_function()</li>
+<li>array_map()</li>
+</ul>
+<h3 id="命令执行-1"><a href="#命令执行-1" class="headerlink" title="命令执行"></a>命令执行</h3><ul>
+<li>system()</li>
+<li>passthru()</li>
+<li>exec()</li>
+<li>pcntl_exec()</li>
+<li>shell_exec()</li>
+<li>popen()</li>
+<li>proc_open()</li>
+<li>``（反引号）</li>
+<li>ob_start()</li>
+</ul>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><ul>
+<li>move_uploaded_file()</li>
+<li>getimagesize() （验证文件头只要为Gif89a就返回真）</li>
+</ul>
+<h3 id="文件删除"><a href="#文件删除" class="headerlink" title="文件删除"></a>文件删除</h3><ul>
+<li>unlink()</li>
+</ul>
+<h3 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h3><ul>
+<li>require()</li>
+<li>include()</li>
+<li>require_once()</li>
+<li>include_once()</li>
+</ul>
+<h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><ul>
+<li>highlight_file($filename)</li>
+<li>show_source($filename)</li>
+<li>hightlight_file($filename)</li>
+<li>show_source($filename)</li>
+<li>print_r(php_strip_whitespace($filename))</li>
+<li>print_r(file_get_contents($filename))</li>
+<li>readfile($filename)</li>
+<li>print_r(file($filename))</li>
+<li>fread(fopen(filename,”r”),size)</li>
+<li>include($filename); // 非php代码</li>
+<li>include_once($filename); // 非php代码</li>
+<li>require($filename); // 非php代码</li>
+<li>require_once($filename); // 非php代码</li>
+<li>print_r(fread(popen(“cat flag”, “r”), $size))</li>
+<li>print_r(fgets(fopen($filename, “r”))); // 读取一行</li>
+<li>fpassthru(fopen($filename, “r”)); // 从当前位置一直读取到 EOF</li>
+<li>print_r(fgetcsv(fopen(filename,”r”),size));</li>
+<li>print_r(fgetss(fopen($filename, “r”))); // 从文件指针中读取一行并过滤掉 HTML 标记</li>
+<li>print_r(fscanf(fopen(“flag”, “r”),”%s”));</li>
+<li>print_r(parse_ini_file($filename)); // 失败时返回 false , 成功返回配置数组</li>
+</ul>
+<h3 id="读取目录"><a href="#读取目录" class="headerlink" title="读取目录"></a>读取目录</h3><ul>
+<li>print_r(glob(“*”)); // 列当前目录</li>
+<li>print_r(glob(“/*”)); // 列根目录 </li>
+<li>print_r(scandir(“.”));</li>
+<li>$d=opendir(“.”);while(false!==($f=readdir($d))){echo”$f\n”;}</li>
+<li>$d=dir(“.”);while(false!==($f=$d-&gt;read())){echo $f.”\n”;}</li>
+</ul>
+<h3 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="变量覆盖"></a>变量覆盖</h3><ul>
+<li>extract()</li>
+<li>$$</li>
+<li>import_request_variables()</li>
+<li>parse_str()</li>
+<li>mb_parse_str()</li>
+<li>全局变量覆盖：register_globals为ON，$GLOBALS</li>
+</ul>
+</div><ul class="post-copyright"><li><strong>Post Title: </strong><a href="http://yoursite.com/2020/10/08/php-security/">php安全小记（一）</a></li><li><strong>Post Author: </strong><a href="http://yoursite.com">Katharsis</a></li><li><strong>Post Link: </strong><a href="http://yoursite.com/2020/10/08/php-security/">http://yoursite.com/2020/10/08/php-security/</a></li><li><strong>Copyright Notice: </strong><span>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</span></li></ul><div><div class="recommend-post"><span class="is-size-6 has-text-grey has-mr-7"># Related Post</span><br><span>  1.<a class="is-size-6" href="/2020/09/29/xss-challenge-2/" target="_blank">xss从零开始之刷xss挑战</a><br></span><span>  2.<a class="is-size-6" href="/2020/09/22/xss-game/" target="_blank">xss从零开始之刷xss-game</a><br></span><span>  3.<a class="is-size-6" href="/2020/09/17/xss-challenges/" target="_blank">xss从零开始之刷xss-quiz</a><br></span></div></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/10/03/alert-1-to-win/"><span class="level-item">alert(1)-to-win的payload与知识点总结</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget toc-scroll" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-php-ini" href="#php-ini"><span>php.ini</span></a></li><li><a class="is-flex toc-item" id="toc-item-命令执行" href="#命令执行"><span>命令执行</span></a><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-代码执行" href="#代码执行"><span>代码执行</span></a></li><li><a class="is-flex toc-item" id="toc-item-命令执行-1" href="#命令执行-1"><span>命令执行</span></a></li></ul></li><li><a class="is-flex toc-item" id="toc-item-文件操作" href="#文件操作"><span>文件操作</span></a><ul class="menu-list toc"><li><a class="is-flex toc-item" id="toc-item-文件上传" href="#文件上传"><span>文件上传</span></a></li><li><a class="is-flex toc-item" id="toc-item-文件删除" href="#文件删除"><span>文件删除</span></a></li><li><a class="is-flex toc-item" id="toc-item-文件包含" href="#文件包含"><span>文件包含</span></a></li><li><a class="is-flex toc-item" id="toc-item-文件读取" href="#文件读取"><span>文件读取</span></a></li><li><a class="is-flex toc-item" id="toc-item-读取目录" href="#读取目录"><span>读取目录</span></a></li><li><a class="is-flex toc-item" id="toc-item-变量覆盖" href="#变量覆盖"><span>变量覆盖</span></a></li></ul></li></ul></div></div><script type="text/javascript" async>
+        $(document).ready(function () { //参考自 https://github.com/ppoffice/hexo-theme-icarus/pull/616/files
+            var observerTopMargin;
+            var scrollObserver;
+            var headerElems = $(".headerlink");
+            var activeTocItem;
+        
+            function initIntersectionObserver(docHeight) {
+                observerTopMargin = docHeight;
+                scrollObserver = new IntersectionObserver(scrollCallBack,
+                    {
+                        root: null,  // viewpoint
+                        rootMargin: docHeight + "px 0px -80% 0px"  // cover top 30% of viewport to the top of document
+                    })
+            }
+        
+            function scrollCallBack(entries, observer) {
+                if ($(window).scrollTop() > observerTopMargin * 0.7) { 
+                    // User somehow scroll to 70% of observerTopMargin (which is inited as 200% document height)
+                    // Observer top margin need to extend to cover all the space to the top of the document
+                    initIntersectionObserver(observerTopMargin * 2)
+                    observer.disconnect();
+                    return;
+                }
+                let toActive;
+                if (entries[0].intersectionRatio == 1) {  // enter viewed area
+                    let entry = entries.reduce((u, v) => (u.target.toc_id > v.target.toc_id ? u : v));  // get the lowest item
+                    toActive = $("#toc-item-" + $(entry.target).attr("href").substr(1));
+                } else {
+                    let entry = entries.reduce((u, v) => (u.target.toc_id < v.target.toc_id ? u : v));  // get the highest item
+                    let idx = Math.max(entry.target.toc_id - 1, 0);
+                    toActive = $("#toc-item-" + $(headerElems[idx]).attr("href").substr(1));
+                }
+                if (activeTocItem) activeTocItem.removeClass("is-current");
+                activeTocItem = toActive
+                activeTocItem.addClass("is-current");
+            }
+        
+            initIntersectionObserver($(document).height() * 2);
+            headerElems.each(function (index, obj) {
+                obj.toc_id = index;
+                scrollObserver.observe(obj);
+            })
+        });</script></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="Katharsis"></figure><p class="title is-size-4 is-block line-height-inherit">Katharsis</p><p class="is-size-6 is-block">^_^</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>中国</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">23</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">5</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="/" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Github" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Weibo" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Email" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="Next" href="/null"><i></i></a><a class="level-item button is-transparent is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/null"><i></i></a></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/123456.png" alt="Kath4rs1s" height="28"></a><p class="size-small"><span>&copy; 2020 Katharsis</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>,Modify by <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">removeif</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><span><span id="statistic-times">loading...</span><script>function createTime(time) {
+            var n = new Date(time);
+            now.setTime(now.getTime() + 250),
+                days = (now - n) / 1e3 / 60 / 60 / 24,
+                dnum = Math.floor(days),
+                hours = (now - n) / 1e3 / 60 / 60 - 24 * dnum,
+                hnum = Math.floor(hours),
+            1 == String(hnum).length && (hnum = "0" + hnum),
+                minutes = (now - n) / 1e3 / 60 - 1440 * dnum - 60 * hnum,
+                mnum = Math.floor(minutes),
+            1 == String(mnum).length && (mnum = "0" + mnum),
+                seconds = (now - n) / 1e3 - 86400 * dnum - 3600 * hnum - 60 * mnum,
+                snum = Math.round(seconds),
+            1 == String(snum).length && (snum = "0" + snum),
+                document.getElementById("statistic-times").innerHTML = "❤️Site from <strong>"+time.split(" ")[0].replace(/\//g,".")+"</strong> has existed <strong>" + dnum + "</strong> d <strong>" + hnum + "</strong> h <strong>" + mnum + "</strong> m <strong>" + snum + "</strong> s！❤️";
+        }var now = new Date();setInterval("createTime('2020/7/11 00:00:00')", 250,"");</script><br></span><div class="size-small"><span>❤️Thx <strong><span id="busuanzi_value_site_uv">99+</span></strong> users <strong><span id="busuanzi_value_site_pv">99+</span></strong> visited！❤️</span></div></p></div><div class="level-end"><div class="sideMusic"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js style="width: auto;height: 2000px;" server="netease" type="playlist" id="4978492128" theme="#2980b9" loop="all" autoplay="false" order="list" storageName="aplayer-setting" lrctype="0" list-max-height="400px" fixed="true"></meting-js></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back-to-top.js" defer></script><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.12/js/lightgallery-all.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><!--!--><!--!--><!--!--><script src="/js/toc.js" defer></script><script src="/js/main.js" defer></script><link rel="stylesheet" href="/css/insight.css"><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="Type something..."><span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"></div></div></div></div><script>(function (window) {
+            var INSIGHT_CONFIG = {
+                TRANSLATION: {
+                    POSTS: 'Posts',
+                    PAGES: 'Pages',
+                    CATEGORIES: 'Categories',
+                    TAGS: 'Tags',
+                    UNTITLED: '(Untitled)',
+                },
+                CONTENT_URL: '/content.json',
+            };
+            window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+        })(window);</script><script src="/js/insight.js" defer></script></body></html>
